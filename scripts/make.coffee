@@ -27,7 +27,7 @@ module.exports = (robot) ->
     app = github.qualified_repo msg.match[1]
 
     github.branches(app).merge "master", into: "staging", (commit) ->
-      msg.reply "Master have been merged into staging: '#{commit.url}'"
+      msg.reply "Master have been merged into staging: #{commit.sha}"
 
   robot.respond /make ([^ ]+)$/i, (msg) ->
     robot.logger.info msg.match[1]
