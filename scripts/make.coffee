@@ -26,10 +26,10 @@ module.exports = (robot) ->
   robot.respond /make ([-_\.0-9a-zA-Z]+) uptodate$/i, (msg) ->
     app = github.qualified_repo msg.match[1]
 
-    github.branches(app).merge "master", into: "staging", (mergeCommit) ->
-      msg.reply mergeCommit.message
+    github.branches(app).merge "master", into: "staging", (commit) ->
+      msg.reply "Merged master with: #{commit.message}"
 
-  robot.respond /make ([^ ]*)$/i, (msg) ->
+  robot.respond /make ([^ ]+)$/i, (msg) ->
     robot.logger.info msg.match[1]
     msg.reply msg.match[1]
 
