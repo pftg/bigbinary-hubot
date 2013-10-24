@@ -20,10 +20,16 @@
 module.exports = (robot) ->
   github = require("githubot")(robot)
 
+  github.handleErrors (response) ->
+    msg.reply "Oh no! #{response.body}!"
+
   robot.respond /make ([-_\.0-9a-zA-Z]+) uptodate$/i, (msg) ->
-    app      = github.qualified_repo msg.match[1]
+    app = github.qualified_repo msg.match[1]
 
     github.branches(app).merge "master", into: "staging", (mergeCommit) ->
-      console.log mergeCommit.message
+      msg.reply mergeCommit.message
 
+  robot.respond /make ([^ ]*)$/i, (msg) ->
+    robot.logger.info msg.match[1]
+    msg.reply msg.match[1]
 
